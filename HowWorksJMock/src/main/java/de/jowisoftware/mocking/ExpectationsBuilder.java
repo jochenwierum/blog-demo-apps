@@ -29,4 +29,8 @@ public abstract class ExpectationsBuilder {
     protected void willReturn(final Object result) {
         lastMock.getExpectationList().addResultToLastCall(result);
     }
+
+    protected void willThrow(final Throwable throwable) {
+        lastMock.getExpectationList().addThrowableToLastCall(throwable);
+    }
 }

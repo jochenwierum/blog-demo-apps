@@ -6,26 +6,53 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hamcrest.Matcher;
+
 import de.jowisoftware.mocking.results.MockCallResult;
 import de.jowisoftware.mocking.results.MockCallThrowableResult;
 import de.jowisoftware.mocking.results.MockCallValueResult;
 
 public class ExpectationList {
     private static class Expectation {
-        public final Method method;
-        public final Object[] arguments;
+        private final Method method;
+        private final Object[] arguments;
 
         public MockCallResult result;
+
+        private boolean useMatchers = false;
+        private Matcher<?>[] matchers;
 
         public Expectation(final Method method, final Object[] arguments) {
             this.method = method;
             this.arguments = arguments;
         }
 
+        public void registerMatchers(final Matcher<?>[] matchers) {
+            if (matchers.length != arguments.length) {
+                throw new IllegalStateException(
+                        "Either all or none arguments must use 'with'");
+            }
+
+            useMatchers = true;
+            this.matchers = matchers;
+        }
+
         public boolean matches(final Method calledMethod,
                 final Object[] methodArguments) {
-            return calledMethod.equals(method)
-                    && Arrays.deepEquals(arguments, methodArguments);
+            if (!calledMethod.equals(method)) {
+                return false;
+            }
+
+            if (!useMatchers) {
+                return Arrays.deepEquals(arguments, methodArguments);
+            } else {
+                for (int i = 0; i <matchers.length; ++i) {
+                    if (!matchers[i].matches(methodArguments[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            }
         }
     }
 
@@ -66,5 +93,9 @@ public class ExpectationList {
 
     public boolean isEmpty() {
         return expectations.isEmpty();
+    }
+
+    public void registerMatcherToLastCall(final Matcher<?>[] matchersArray) {
+        lastExpectation.registerMatchers(matchersArray);
     }
 }

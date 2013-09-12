@@ -1,5 +1,10 @@
 package de.jowisoftware.mocking;
 
+import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.CoreMatchers.equalTo;
+
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -117,6 +122,34 @@ public class MockTest {
         });
 
         mock.method1();
+        context.verify();
+    }
+
+    @Test
+    public void testMockWithMatchers() {
+        final MockContext context = new MockContext();
+        final MyInterface mock = context.mock(MyInterface.class);
+
+        context.defineExpectations(new ExpectationsBuilder() {
+            @Override
+            void build() {
+                oneOf(mock).method4(with(any(Date.class)),
+                        with(equalTo("test")));
+                oneOf(mock).method3(withInt(equalTo(1)));
+            }
+        });
+
+        mock.method4(new Date(), "test");
+
+        boolean cought = false;
+        try {
+            mock.method3(5);
+        } catch (final AssertionError e) {
+            cought = true;
+        }
+        Assert.assertTrue("Expected exception, bot got none", cought);
+
+        mock.method3(1);
         context.verify();
     }
 }
