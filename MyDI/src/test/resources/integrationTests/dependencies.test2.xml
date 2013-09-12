@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://jowisoftware.de/MyDI" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://jowisoftware.de/MyDI ../../../main/xsd/MyDI.xsd ">
+
+    <bean class="de.jowisoftware.myDI.integrationtests.test2.Class1" id="bean1">
+        <property name="prop" value="Hello From Class 1"/>
+        <property name="bean" ref="bean2"/>
+    </bean>
+    
+    <bean class="de.jowisoftware.myDI.integrationtests.test2.Class2" id="bean2">
+        <property name="prop" value="Hello From Class 2"/>
+        <property name="bean" ref="bean1"/>
+    </bean>
+</beans>

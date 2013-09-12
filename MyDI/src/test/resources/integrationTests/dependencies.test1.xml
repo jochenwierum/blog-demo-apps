@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://jowisoftware.de/MyDI" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://jowisoftware.de/MyDI ../../../main/xsd/MyDI.xsd ">
+
+    <bean class="de.jowisoftware.myDI.integrationtests.test1.Class1" id="bean1">
+        <property name="prop1" value="val1"/>
+        <property name="prop2" value="val2"/>
+    </bean>
+    
+    <bean class="de.jowisoftware.myDI.integrationtests.test1.Class2" id="bean2">
+        <property name="prop3" value="4"/>
+        <property name="prop4" value="-5.4"/>
+    </bean>
+</beans>

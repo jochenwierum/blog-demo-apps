@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://jowisoftware.de/MyDI"
+    xmlns:tns="http://jowisoftware.de/MyDI"
+    elementFormDefault="qualified">
+
+    <element name="bean" type="tns:Tbean" />
+    <element name="property" type="tns:Tproperty" />
+
+    <element name="beans">
+        <complexType>
+            <sequence>
+                <element ref="tns:bean" maxOccurs="unbounded" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="Tbean">
+        <sequence>
+            <element ref="tns:property" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+        <attribute name="id" type="ID" use="required" />
+        <attribute name="class" type="string" use="required" />
+    </complexType>
+
+    <complexType name="Tproperty">
+        <attribute name="name" type="string" use="required" />
+        <attribute name="ref" type="IDREF" />
+        <attribute name="value" type="string" />
+    </complexType>
+</schema>

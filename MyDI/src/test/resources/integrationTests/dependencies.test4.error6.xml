@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://jowisoftware.de/MyDI" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://jowisoftware.de/MyDI ../../../main/xsd/MyDI.xsd ">
+
+    <bean class="de.jowisoftware.myDI.integrationtests.test4.Class2" id="beanid"/>
+</beans>
